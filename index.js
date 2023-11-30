@@ -1,10 +1,14 @@
 const express = require('express');
+const hotelRoutes = require('./router/router-hotel');
+
+
 const bodyParser = require('body-parser');
 // const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
 
 const UserModel = require ('./models').user;
+
 
 // get config vars
 dotenv.config();
@@ -19,10 +23,12 @@ app.get('/user', async (req, res) => {
     const users = await UserModel.findAll();
     res.status(200).json(users);
   } catch (error) {
-    console.error(error); // Log the error for debugging purposes
+    console.error(error);
     res.status(500).json({});
   }
 });
+
+app.use('/', hotelRoutes);
 
 // Menambahkan route untuk tampilan selamat datang di web
 app.get('/', (req, res) => {
