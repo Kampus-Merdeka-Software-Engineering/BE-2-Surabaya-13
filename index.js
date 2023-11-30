@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const hotelRoutes = require('./router/router-hotel');
 
 
-const UserModel = require ('./models').user;
+// const UserModel = require ('./models').user;
 
 // app.use(bodyParser.json());
 
@@ -15,16 +15,16 @@ dotenv.config();
 const app = express();
 const PORT = 3000;   
 
-//membuat Get All User
-app.get('/user', async (req, res) => {
-  try {
-    const users = await UserModel.findAll();
-    res.status(200).json(users);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({});
-  }
-});
+// //membuat Get All User
+// app.get('/user', async (req, res) => {
+//   try {
+//     const users = await UserModel.findAll();
+//     res.status(200).json(users);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({});
+//   }
+// });
 
 
 app.use('/', hotelRoutes);
