@@ -19,9 +19,7 @@ module.exports = {
       Name: 'Pikachu',
       Email: 'pikachu@email.com',
       Password: '122'
-    }
-  
-  ], {});
+    }], {});
   },
 
   async down (queryInterface, Sequelize) {

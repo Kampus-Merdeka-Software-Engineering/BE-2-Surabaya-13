@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 
 
+const UserModel = require ('./models').user;
+
 // get config vars
 dotenv.config();
 
@@ -11,6 +13,16 @@ const app = express();
 // app.use(bodyParser.json());
 const PORT = 3000;   
 
+//membuat Get All User
+app.get('/user', async (req, res) => {
+  try {
+    const users = await UserModel.findAll();
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error); // Log the error for debugging purposes
+    res.status(500).json({});
+  }
+});
 
 // Menambahkan route untuk tampilan selamat datang di web
 app.get('/', (req, res) => {
