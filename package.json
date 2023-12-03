@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:setup": "npx sequelize db:create && npx sequelize db:migrate",
+    "db:up": "npx sequelize db:migrate",
+    "db:down": "npx sequelize db:migrate:undo",
+    "db:restart": "npx sequelize db:drop && npm run db:setup"
   },
   "author": "yosuahutasoit082@gmail.com",
   "license": "ISC",
