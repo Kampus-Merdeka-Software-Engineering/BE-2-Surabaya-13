@@ -1,10 +1,8 @@
-const HotelModel = require ('../models').hotel;
-// const jwt = require('jsonwebtoken')
-// const bcrypt = require('bcrypt')
+const Hotel = require ('../models').hotel;
 
 const getHotels = async (req, res) => {
   try {
-    const hotels = await HotelModel.findAll();
+    const hotels = await Hotel.findAll();
     res.status(200).json(hotels);
   } catch (error) {
     console.error(error);
@@ -14,7 +12,16 @@ const getHotels = async (req, res) => {
 
 const addHotels = async (req, res) => {
   try {
-    res.status(201).json({ message: 'Hotel added successfully' });
+    const { Name, Description, Price } = req.body;
+
+    const hotel = new Hotel({
+      Name,
+      Description,
+      Price
+    });
+
+    const addHotel = await hotel.save();
+    res.status(201).json({ message: 'Hotel created successfully', data: addHotel });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Failed to add hotel' });
@@ -23,7 +30,7 @@ const addHotels = async (req, res) => {
 
 const updateHotel = async (req, res) => {
   try {
-    const updatedHotel = await HotelModel.update(req.body, { where: { id: req.params.id } });
+    const updatedHotel = await Hotel.update(req.body, { where: { id: req.params.id } });
     
     if (updatedHotel[0] === 1) {
       res.status(200).json({ message: 'Hotel updated successfully' });
@@ -38,7 +45,7 @@ const updateHotel = async (req, res) => {
 
 const deleteHotel = async (req, res) => {
   try {
-    const deletedHotel = await HotelModel.destroy({ where: { id: req.params.id } });
+    const deletedHotel = await Hotel.destroy({ where: { id: req.params.id } });
     
     if (deletedHotel === 1) {
       res.status(200).json({ message: 'Hotel deleted successfully' });
