@@ -2,6 +2,10 @@ const express = require('express');
 const cors = require('cors')
 const dotenv = require('dotenv');
 const hotelRoutes = require('./router/router-hotel');
+const helmet = require('helmet')
+
+app.use(cors())
+app.use(helmet())
 
 
 // get config vars
