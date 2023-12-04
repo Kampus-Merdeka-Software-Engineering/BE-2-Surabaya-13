@@ -13,14 +13,17 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         unique : true,
+        defaultValue: 'DefaultName'
       },
       Description: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
+        defaultValue: 'DefaultDescription'
       },
       Price: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        defaultValue: 'DefaultPrice'
       },
       createdAt: {
         allowNull: false,
