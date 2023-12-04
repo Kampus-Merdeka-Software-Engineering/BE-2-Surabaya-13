@@ -1,11 +1,11 @@
 const express = require('express');
-const cors = require('cors')
+// const cors = require('cors')
 const bodyParser = require('body-parser');
 const hotelRoutes = require('./router/router-hotel');
-const helmet = require('helmet')
+// const helmet = require('helmet')
 
-app.use(cors())
-app.use(helmet())
+// app.use(cors())
+// app.use(helmet())
 
 // get config vars
 require('dotenv').config();
