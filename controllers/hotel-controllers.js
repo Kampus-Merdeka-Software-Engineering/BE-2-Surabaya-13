@@ -17,7 +17,7 @@ const addHotels = async (req, res) => {
     // Saving the new hotel to the database
     const addHotel = await hotel.save();
 
-     // Sending a success response with the created hotel data
+    // Sending a success response with the created hotel data
     res.status(201).json({ message: 'Hotel created successfully', data: addHotel });
   } catch (error) {
     // Handling errors and sending a failure response
@@ -62,7 +62,6 @@ const updateHotel = async (req, res) => {
       return res.status(404).json({ status: 404, message: "Data Hotel not found" });
     }
 
-    // Validation
     const schema = {
       Name: "string|optional",
       Description: "string|optional",
@@ -73,7 +72,6 @@ const updateHotel = async (req, res) => {
       return res.status(400).json(validate);
     }
 
-    // Process update
     hotel = await hotel.update(req.body);
     res.json({
       status: 200,
