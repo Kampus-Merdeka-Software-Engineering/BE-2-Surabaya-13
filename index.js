@@ -1,16 +1,16 @@
 const express = require('express');
-// const cors = require('cors')
+const cors = require('cors')
 const bodyParser = require('body-parser');
 const hotelRoutes = require('./router/router-hotel');
-// const helmet = require('helmet')
-
-// app.use(cors())
-// app.use(helmet())
+const helmet = require('helmet')
 
 // get config vars
 require('dotenv').config();
 
 const app = express();
+
+app.use(cors())
+app.use(helmet())
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());

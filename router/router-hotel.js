@@ -3,9 +3,10 @@ const router = express.Router();
 const hotelController = require('../controllers/hotel-controllers');
 
 router.get('/hotels', hotelController.getHotels);
-router.get('/hotelsId', hotelController.getHotelsbyID);
+router.get('/hotels/:id', hotelController.getHotelsbyID);
 router.post('/hotel', hotelController.addHotels);
-router.put('/hotelId', hotelController.updateHotel);
-router.delete('/hotel/:hotelId', hotelController.addHotels);
+router.put('/hotel/:id', hotelController.updateHotel);
+router.delete('/hoteld', hotelController.deleteHotel);
+router.delete('/hoteld/:id', hotelController.deleteHotelById);
 
 module.exports = router;

@@ -1,18 +1,26 @@
 const Hotel = require ('../models').hotel;
+const Validator = require("fastest-validator");
+const v = new Validator();
 
 const addHotels = async (req, res) => {
   try {
+    // Extracting data from the request body
     const { Name, Description, Price } = req.body;
 
+    // Creating a new Hotel instance with the extracted data
     const hotel = new Hotel({
       Name,
       Description,
       Price
     });
 
+    // Saving the new hotel to the database
     const addHotel = await hotel.save();
+
+     // Sending a success response with the created hotel data
     res.status(201).json({ message: 'Hotel created successfully', data: addHotel });
   } catch (error) {
+    // Handling errors and sending a failure response
     console.error(error);
     res.status(500).json({ message: 'Failed to add hotel' });
   }
@@ -24,76 +32,94 @@ const getHotels = async (req, res) => {
     res.status(200).json(hotels);
   } catch (error) {
     console.error(error);
-    res.status(500).json({});
+    res.status(500).json({message: 'Failed to get hotel'});
   }
 };
 
 const getHotelsbyID = async (req, res) => {
+
+  const id = req.params.id;
+
   try {
-    const hotel = await Hotel.findById(req.params.id);
+    let hotel = await Hotel.findByPk(id);
+
     if (!hotel) {
-      return res.status(404).json({ message: 'Hotel not found' });
+      return res.status(404).json({ status: 404, message: "Data Hotel not found" });
+    } else {
+      return res.json({ status: 200, message: "Success get data Hotel", data: hotel });
     }
-    res.status(200).json({ message: 'Successfully retrieved hotel', data: hotel });
   } catch (error) {
     console.error(error);
-    res.status(500).json({});
+    res.status(500).json({message: 'Failed to get hotel'});
   }
-};
+}
 
 const updateHotel = async (req, res) => {
   try {
-    if (!req.hotel || !req.hotel.hotelId) {
-      return res.status(400).json({ message: 'Invalid request, missing hotelId' });
+    const id = req.params.id;
+    let hotel = await Hotel.findByPk(id);
+    if (!hotel) {
+      return res.status(404).json({ status: 404, message: "Data Hotel not found" });
     }
 
-    const hotelId = req.hotel.hotelId;
-
-    const dataHotel = await Hotel.findOne({ hotelId });
-
-    if (!dataHotel) {
-      return res.status(404).json({ message: 'Hotel user not found' });
-    }
-
-    const updateHotel = {
-      Name: req.body.Name,
-      Description: req.body.Description,
-      Price: req.body.Price,
+    // Validation
+    const schema = {
+      Name: "string|optional",
+      Description: "string|optional",
+      Price: "string|optional"
     };
-
-    const updatedataHotel = await Hotel.findOneAndUpdate(
-      { hotelId },
-      updateHotel,
-      { new: true }
-    );
-
-    if (!updatedataHotel) {
-      return res.status(404).json({ error: 'Data hotel not found.' });
+    const validate = v.validate(req.body, schema);
+    if (validate.length) {
+      return res.status(400).json(validate);
     }
 
-    res.status(200).json({ status: 'Success', message: 'Data hotel updated successfully' });
-
+    // Process update
+    hotel = await hotel.update(req.body);
+    res.json({
+      status: 200,
+      message: "Success update data Hotel",
+      data: hotel,
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to update hotel' });
+    res.status(500).json({message: 'Failed to update hotel'});
   }
 };
 
 const deleteHotel = async (req, res) => {
   try {
-    const deletedHotel = await Hotel.destroy({ where: { id: req.params.id } });
-    
-    if (deletedHotel === 1) {
-      res.status(200).json({ message: 'Hotel deleted successfully' });
+    const deletedHotelsCount = await Hotel.destroy({ where: {} });
+
+    if (deletedHotelsCount > 0) {
+      res.status(200).json({ message: 'All Hotel data deleted successfully' });
     } else {
-      res.status(404).json({ message: 'Hotel not found' });
+      res.status(404).json({ message: 'No Hotel data found to delete' });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to delete hotel' });
+    res.status(500).json({ message: 'Failed to delete Hotel data' });
+  }
+};
+
+const deleteHotelById = async (req, res) => {
+  const id = req.params.id;
+  try {
+    let hotel = await Hotel.findByPk(id);
+    if (!hotel) {
+      return res.status(404).json({ status: 404, message: "Data Hotel not found" });
+    }
+
+    await hotel.destroy();
+    res.json({
+      status: 200,
+      message: "Success delete data Hotel",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 500, message: "Failed to delete hotel" });
   }
 };
 
 
 
-module.exports = { addHotels, getHotels, getHotelsbyID, updateHotel, deleteHotel };
+module.exports = { addHotels, getHotels, getHotelsbyID, updateHotel, deleteHotel, deleteHotelById };
