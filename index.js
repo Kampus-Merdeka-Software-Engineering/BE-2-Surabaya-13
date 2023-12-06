@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-app.use('/', hotelRoutes);
+app.use(hotelRoutes);
 
 // Menambahkan route untuk tampilan selamat datang di web
 app.get('/', (req, res) => {
