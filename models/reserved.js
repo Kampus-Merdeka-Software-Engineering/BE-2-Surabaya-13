@@ -3,17 +3,16 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class hotel extends Model {
+  class reserved extends Model {
     static associate(models) {
     }
   }
-  hotel.init({
+  reserved.init({
     Name: DataTypes.STRING,
-    Description: DataTypes.STRING
+    Email: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'hotel',
-    freezeTableName: true
+    modelName: 'reserved',
   });
-  return hotel;
+  return reserved;
 };
