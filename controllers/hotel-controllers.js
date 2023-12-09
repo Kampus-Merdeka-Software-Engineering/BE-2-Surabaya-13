@@ -4,23 +4,17 @@ const v = new Validator();
 
 const addHotels = async (req, res) => {
   try {
-    // Extracting data from the request body
-    const { Name, Description, Price } = req.body;
+    const { Name, Description } = req.body;
 
-    // Creating a new Hotel instance with the extracted data
     const hotel = new Hotel({
       Name,
       Description,
-      Price
     });
 
-    // Saving the new hotel to the database
     const addHotel = await hotel.save();
 
-    // Sending a success response with the created hotel data
     res.status(201).json({ message: 'Hotel created successfully', data: addHotel });
   } catch (error) {
-    // Handling errors and sending a failure response
     console.error(error);
     res.status(500).json({ message: 'Failed to add hotel' });
   }
@@ -65,7 +59,6 @@ const updateHotel = async (req, res) => {
     const schema = {
       Name: "string|optional",
       Description: "string|optional",
-      Price: "string|optional"
     };
     const validate = v.validate(req.body, schema);
     if (validate.length) {

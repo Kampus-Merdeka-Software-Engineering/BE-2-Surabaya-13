@@ -2,9 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const hotelRoutes = require('./router/router-hotel');
+const reserveRoutes = require('./router/router-reserve');
+const hotelRoutes = require('./router/router-hotel');
+const subscribeRoutes = require('./router/router-subscribe');
 const helmet = require('helmet')
 
-// get config vars
 require('dotenv').config();
 
 const app = express();
@@ -12,14 +14,14 @@ const app = express();
 app.use(cors());
 app.use(helmet())
 
-// Middleware to parse JSON bodies
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.use(hotelRoutes);
+app.use(reserveRoutes);
+app.use(subscribeRoutes);
 
-// Menambahkan route untuk tampilan selamat datang di web
 app.get('/', (req, res) => {
   res.send('<h1>Halo, Selamat Datang!</h1>');
 });

@@ -2,23 +2,15 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('hotel', {
+    await queryInterface.createTable('subscribe', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      Name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique : true,
-        defaultValue: 'DefaultName'
-      },
-      Description: {
-        type: Sequelize.STRING,
-        allowNull: true,
-        defaultValue: 'DefaultDescription'
+      Email: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -33,6 +25,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('hotel');
+    await queryInterface.dropTable('subscribe');
   }
 };
