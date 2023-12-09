@@ -2,8 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const hotelRoutes = require('./router/router-hotel');
-// const reserveRoutes = require('./router/router-reserve');
-// const subscribeRoutes = require('./router/router-subscribe');
+const reserveRoutes = require('./router/router-reserved');
+const subscribesRoutes = require('./router/router-subscribes');
 const helmet = require('helmet')
 
 require('dotenv').config();
@@ -18,8 +18,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.use(hotelRoutes);
-// app.use(reserveRoutes);
-// app.use(subscribeRoutes);
+app.use(reserveRoutes);
+app.use(subscribesRoutes);
 
 app.get('/', (req, res) => {
   res.send('<h1>Halo, Selamat Datang!</h1>');
