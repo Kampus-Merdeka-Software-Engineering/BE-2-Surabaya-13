@@ -4,9 +4,8 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert('hotel', [{
-      Name: 'Badung, Indonesia',
-      Description: 'Book your gateway to this contem..',
-      Price: 'Rp16,161,062 night'
+      Name: 'Nusa Ceningan, Indonesia',
+      Description: 'Nusa Ceningan, pintu gerbang menuju pesona kontemporer yang tak terlupakan. Jadikan liburan Anda lebih istimewa dengan menginap di akomodasi eksklusif kami, hanya dengan Rp4,398,219 per malam.'
       }],
     {});
   },

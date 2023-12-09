@@ -9,8 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   hotel.init({
     Name: DataTypes.STRING,
-    Description: DataTypes.STRING,
-    Price: DataTypes.STRING
+    Description: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'hotel',
