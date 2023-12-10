@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   reserved.init({
     Name: DataTypes.STRING,
-    Email: DataTypes.STRING
+    Email: DataTypes.STRING,
+    Date: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'reserved',

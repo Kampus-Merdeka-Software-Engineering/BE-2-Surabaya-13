@@ -2,15 +2,16 @@ const HotelReserve = require ('../models').reserved;
 
 const Reserve = async (req, res) => {
   try {
-    const { Name, Email } = req.body;
+    const { Name, Email, Date } = req.body;
 
-    if (!Name || !Email) {
-      return res.status(400).json({ message: 'Name and Email are required fields' });
+    if (!Name || !Email | !Date) {
+      return res.status(400).json({ message: 'Name, Email and Date are required fields' });
     }
 
     const hotel = new HotelReserve({
       Name,
       Email,
+      Date
     });
 
     const addHotel = await hotel.save();
